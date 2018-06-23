@@ -27,7 +27,7 @@ class Player : public Objects {
 	private:
 		int		_xMax;
 		int		_yMax;
-		Objects	*object;
+		// Objects	*object;
 };
 
 #endif

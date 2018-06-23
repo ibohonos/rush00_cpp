@@ -4,70 +4,73 @@
 Player::Player(void) {}
 
 Player::Player(WINDOW *win, int yPos, int xPos, int sizeY, int sizeX, std::string type) {
-	Objects		*player = new Objects(type, win);
+	// Objects		*player = new Objects(type, win);
 
-	this->object = player;
-	this->object->setXPos(xPos);
-	this->object->setYPos(yPos);
-	this->object->setSizeX(sizeX);
-	this->object->setSizeY(sizeY);
-	getmaxyx(this->object->getWindow(), this->_yMax, this->_xMax);
-	keypad(this->object->getWindow(), true); 
+	// this->object = player;
+	_win = win;
+	_type = type;
+	setXPos(xPos);
+	setYPos(yPos);
+	setSizeX(sizeX);
+	setSizeY(sizeY);
+	getmaxyx(getWindow(), this->_yMax, this->_xMax);
+	keypad(getWindow(), true); 
 }
 
-void		Player::deletePath(void) {
-	mvwaddstr(this->object->getWindow(), this->object->getYPos(), this->object->getXPos(), "   ");
+void		Player::deletePath(void)
+{
+	mvwaddstr(getWindow(), getYPos(), getXPos(), "   ");
 }
 
 void		Player::display(void)
 {
 	start_color();
 	init_pair(1, COLOR_CYAN, COLOR_WHITE);
-	wattron(this->object->getWindow(), A_REVERSE);
-	wattron(this->object->getWindow(), COLOR_PAIR(1));
-	mvwaddstr(this->object->getWindow(), this->object->getYPos(), this->object->getXPos(), " M ");
-	wattroff(this->object->getWindow(), COLOR_PAIR(1));
-	wattroff(this->object->getWindow(), A_REVERSE);
+	wattron(getWindow(), A_REVERSE);
+	wattron(getWindow(), COLOR_PAIR(1));
+	mvwaddstr(getWindow(), getYPos(), getXPos(), " M ");
+	wattroff(getWindow(), COLOR_PAIR(1));
+	wattroff(getWindow(), A_REVERSE);
 }
 
 void		Player::mvup()
 {
 	this->deletePath();
-	int y = this->object->getYPos();
+	int y = getYPos();
 	y -= 1;
 	if (y < 1)
 		y = 1;
-	this->object->setYPos(y);
+	setYPos(y);
 }
 
 void		Player::mvdown()
 {
 	this->deletePath();
-	int y = this->object->getYPos();
+	int y = getYPos();
 	y += 1;
 	if (y > this->_yMax - 2)
 		y = this->_yMax - 2;
-	this->object->setYPos(y);
+	setYPos(y);
 }
 
 void		Player::mvleft()
 {
 	this->deletePath();
-	int x = this->object->getXPos();
+	int x = getXPos();
 	x -= 1;
 	if (x < 1)
 		x = 1;
-	this->object->setXPos(x);
+	setXPos(x);
 }
 
 void		Player::mvright()
 {
 	this->deletePath();
-	int x = this->object->getXPos();
+	int x = getXPos();
 	x += 1;
 	if (x > this->_xMax - 1)
 		x = this->_xMax - 1;
-	this->object->setXPos(x);
+	setXPos(x);
 }
 
 int			Player::getmv()

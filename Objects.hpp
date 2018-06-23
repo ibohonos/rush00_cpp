@@ -29,7 +29,7 @@ class Objects {
 		void			setSizeY(int n);
 		void			setColor(std::string str);
 
-	private:
+	protected:
 		std::string		_type;
 		WINDOW			*_win;
 		int				_xPos;
