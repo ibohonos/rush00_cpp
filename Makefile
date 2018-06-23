@@ -1,22 +1,26 @@
+NAME		= ft_retro
 
-NAME = ft_contrast
-SRC = main.cpp
-OBJ = $(SRC:.cpp=.o)
+SRCS		= Objects.cpp Player.cpp main.cpp
+OBJS		= $(SRCS:.cpp=.o)
+
+CXX			= clang++
+CXXFLAGS	= -Wall -Werror -Wextra
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@clang++ -Wall -Wextra -Werror -o $(NAME) $(SRC) -lncurses
-	@echo $(NAME) "is ready to use"
+$(NAME): $(OBJS)
+	@$(CXX) $(OBJS) -o $@ -lncurses
+
+%.o: %.cpp
+	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+	@echo "\x1B[3;32m$< compiling!\x1B[0m"
 
 clean:
-	@/bin/rm -f *.o
-	@echo "Object files were successfully removed"
+	@rm -f $(OBJS)
+	@echo "\x1B[3;31mObjects removed!\x1B[0m"
 
 fclean: clean
-	@/bin/rm -f $(NAME)
-	@echo $(NAME) "was successfully removed"
+	@rm -f $(NAME)
+	@echo "\x1B[3;31m$(NAME) removed!\x1B[0m"
 
 re: fclean all
-	@echo "The project was successfully recompiled"
-
