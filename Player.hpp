@@ -19,9 +19,7 @@ class Player
   private:
 	int x, y, xMax, yMax;
 	char character;
-	
 	WINDOW *curwin;
-
 	void _deletePath();
 };
 
@@ -84,6 +82,9 @@ int Player::getmv()
 	case KEY_RIGHT:
 		mvright();
 		break;
+	// case KEY_ESCAPE:
+	// 	mvright();
+	// 	break;
 	case 32: //probel
 		mvup();
 		break;
