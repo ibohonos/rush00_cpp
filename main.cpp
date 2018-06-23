@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "Player.hpp"
+#include <unistd.h>
 
 int main(void)
 {
@@ -12,6 +13,9 @@ int main(void)
     curs_set(0);
     int yMax, xMax;
 
+    int time = 0;
+    nodelay(stdscr, true);
+    keypad(stdscr, TRUE);
     //Функция, определяет макс х та у залежно від розміра вікна
     getmaxyx(stdscr, yMax, xMax);
 
@@ -26,12 +30,28 @@ int main(void)
     Player * p = new Player(playerwin, yMax - 3, 1, 0);
     
     //Ду-вайл, щоб була перша
+
+    //
+
+    while (1)
+    {
+        mvwprintw(playerwin, 2, 2,"Time: %d\n",time);
+        p->display();
+        wrefresh(playerwin);
+        usleep(100000);
+        time++;
+        if (p->getmv() == 'x')
+            break ;
+    }
+    /*
     do {
-        //умова отрисовки
+        mvwprintw(playerwin, 2, 2,"Time: %d\n",time);
             p->display();
         wrefresh(playerwin);
+        usleep(100000);
+        time++;
     } while(p->getmv()!= 'x');
-
+*/
     // getch();
     endwin();
     return(0);

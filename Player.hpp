@@ -8,13 +8,12 @@ class Player
   public:
 	Player(WINDOW *win, int yc, int xc, char c);
 
-	void	mvup();
-	void	mvdown();
-	void	mvleft();
-	void	mvright();
-	int		getmv();
-	void	display();
-	
+	void mvup();
+	void mvdown();
+	void mvleft();
+	void mvright();
+	int getmv();
+	void display();
 
   private:
 	int x, y, xMax, yMax;
@@ -67,7 +66,11 @@ void Player::mvright()
 
 int Player::getmv()
 {
-	int choice = wgetch(curwin);
+	int choice = wgetch(stdscr);
+	// if (choice)
+		// mvprintw(y/2, x/2, "Keycode: %d, and the character %c", choice, choice);
+        // mvprintw(y/2, x/2, "Keycode: %d, and the character %c", c, c);
+	// 
 	switch (choice)
 	{
 	case KEY_UP:
@@ -91,7 +94,8 @@ int Player::getmv()
 	default:
 		break;
 	}
-	return choice;
+	// // nodelay(stdscr,false);
+	return (choice);
 }
 
 void Player::_deletePath(void) //можна заюзать, коли попадаєш
@@ -110,8 +114,7 @@ void Player::display()
 	wattroff(curwin, A_REVERSE);
 }
 
-/*
-
+	/*
 display::Shot
 {
 	start_color();
