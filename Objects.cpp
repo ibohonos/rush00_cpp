@@ -1,8 +1,11 @@
 #include "Objects.hpp"
 
+int Objects::_enemiesNum = 0;
+int Objects::_shotsNum = 0;
+
 Objects::Objects(void) {}
 
-Objects::Objects(std::string type, WINDOW *win) : _type(type), _win(win), _xPos(0), _yPos(0),
+Objects::Objects(WINDOW *win) : _win(win), _xPos(0), _yPos(0),
 		_sizeX(0), _sizeY(0), _color("") {}
 
 Objects::Objects(Objects const &rfs) {
@@ -19,7 +22,7 @@ Objects		&Objects::operator=( Objects const &rfs ) {
 	this->_sizeX = rfs._sizeX;
 	this->_sizeY = rfs._sizeY;
 	this->_color = rfs._color;
-	this->_type = rfs._type;
+	// this->_type = rfs._type;
 	this->_win = rfs._win;
 	return *this;
 }
@@ -40,8 +43,11 @@ int			Objects::getSizeY(void) {
 	return this->_sizeY;
 }
 
-std::string	Objects::getType(void) {
-	return this->_type;
+int			Objects::getEnemsN(void) {
+	return this->_enemiesNum;
+}
+int				Objects::getShotNum(void) {
+	return this->_shotsNum;
 }
 
 std::string	Objects::getColor(void) {
@@ -68,6 +74,14 @@ void		Objects::setSizeY(int n) {
 	this->_sizeY = n;
 }
 
+void		Objects::setEnemsN(int n) {
+	this->_enemiesNum = n;
+}
+
 void		Objects::setColor(std::string str) {
 	this->_color = str;
+}
+
+void		Objects::setShotNum(int n) {
+	this->_color = n;
 }

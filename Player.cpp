@@ -1,36 +1,39 @@
-#include "Objects.hpp"
+
 #include "Player.hpp"
 
 Player::Player(void) {}
 
-Player::Player(WINDOW *win, int yPos, int xPos, int sizeY, int sizeX, std::string type) {
-	// Objects		*player = new Objects(type, win);
-
-	// this->object = player;
+Player::Player(WINDOW *win, Enemy * enemies)
+{
 	_win = win;
-	_type = type;
-	setXPos(xPos);
-	setYPos(yPos);
-	setSizeX(sizeX);
-	setSizeY(sizeY);
+	_enems = enemies;
+	_lives = 3;
 	getmaxyx(getWindow(), this->_yMax, this->_xMax);
+	setXPos(_xMax / 2 - 2);
+	setYPos(_yMax / 1.5);
+	
+	setSizeX(3);
+	setSizeY(1);
 	keypad(getWindow(), true); 
 }
 
 void		Player::deletePath(void)
 {
-	mvwaddstr(getWindow(), getYPos(), getXPos(), "   ");
+	mvwaddstr(getWindow(), getYPos(), getXPos(), "     ");
 }
 
 void		Player::display(void)
 {
 	start_color();
-	init_pair(1, COLOR_CYAN, COLOR_WHITE);
-	wattron(getWindow(), A_REVERSE);
+	init_pair(1, COLOR_CYAN, COLOR_BLACK);
+	// wattron(getWindow(), A_REVERSE);
 	wattron(getWindow(), COLOR_PAIR(1));
-	mvwaddstr(getWindow(), getYPos(), getXPos(), " M ");
+	wattron(getWindow(), A_BOLD);
+	mvwaddstr(getWindow(), getYPos(), getXPos(), "\\M/");
+	wattroff(getWindow(), A_BOLD);
 	wattroff(getWindow(), COLOR_PAIR(1));
-	wattroff(getWindow(), A_REVERSE);
+	// wattroff(getWindow(), A_REVERSE);
+	checkCollision();
 }
 
 void		Player::mvup()
@@ -68,18 +71,36 @@ void		Player::mvright()
 	this->deletePath();
 	int x = getXPos();
 	x += 1;
-	if (x > this->_xMax - 1)
-		x = this->_xMax - 1;
+	if (x > this->_xMax - _sizeX - 1)
+		x = this->_xMax - _sizeX - 1;
 	setXPos(x);
+}
+
+void	Player::checkCollision(void)
+{ 
+	for (int i = 0; i < _enemiesNum; i++)
+	{
+		if ((_enems[i].getXPos() == this->getXPos()) && (_enems[i].getYPos() == this->getYPos()))
+		{
+			_enems[i].initObject(getWindow());
+			setLives(getLives() - 1);
+		}
+		if ((_enems[i].getXPos() == this->getXPos() + 1) && (_enems[i].getYPos() == this->getYPos()))
+		{
+			_enems[i].initObject(getWindow());
+			setLives(getLives() - 1);
+		}
+		if ((_enems[i].getXPos() == this->getXPos() + 2) && (_enems[i].getYPos() == this->getYPos()))
+		{
+			_enems[i].initObject(getWindow());
+			setLives(getLives() - 1);
+		}
+	}
 }
 
 int			Player::getmv()
 {
 	int choice = wgetch(stdscr);
-	// if (choice)
-		// mvprintw(y/2, x/2, "Keycode: %d, and the character %c", choice, choice);
-		// mvprintw(y/2, x/2, "Keycode: %d, and the character %c", c, c);
-	// 
 	switch (choice)
 	{
 		case KEY_UP:
@@ -94,15 +115,53 @@ int			Player::getmv()
 		case KEY_RIGHT:
 			this->mvright();
 			break;
-		// case KEY_ESCAPE:
-		// 	this->mvright();
-		// 	break;
-		case 32: //probel
-			this->mvup();
+		case 27:
+			exit(1);
 			break;
 		default:
 			break;
 	}
-	// // nodelay(stdscr,false);
 	return (choice);
+}
+
+int			Player::getLives(void)
+{
+	return this->_lives;
+}
+
+void			Player::setLives(int n)
+{
+	this->_lives = n;
+}
+
+void Player::shot(void)
+{
+	int guns;
+
+	guns = 1;
+	for (int i = 0; i < _shots->shotsNum; i++)
+	{
+		if (guns)
+		{
+			if (!_shots[i].getIsDisp())
+			{
+				_shots[i].setXPos(getXPos());
+				_shots[i].setYPos(getYPos() - 1);
+				_shots[i].display();
+				guns--;
+			}
+		}
+		else
+		{		
+			_shots[i].setXPos(getXPos() + 2);
+			_shots[i].setYPos(getYPos() - 1);
+			_shots[i].display();
+			break; 
+		}
+	}
+}
+
+void Player::setShots(Shot * shots)
+{
+	_shots = shots;
 }

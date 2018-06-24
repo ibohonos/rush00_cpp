@@ -8,35 +8,44 @@
 #include <ctime>
 #include <unistd.h>
 
+
 class Objects {
 	public:
 		Objects(void);
-		Objects(std::string type, WINDOW *win);
+		Objects(WINDOW *win);
 		Objects(Objects const &rfs);
 		~Objects(void);
 
-		Objects			&operator=( Objects const &rfs );
+		Objects			&operator=(Objects const &rfs );
 		int				getXPos(void);
 		int				getYPos(void);
 		int				getSizeX(void);
 		int				getSizeY(void);
-		std::string		getType(void);
 		std::string		getColor(void);
 		WINDOW			*getWindow(void);
+		int				getEnemsN(void);
+		int				getShotNum(void);
+
 		void			setXPos(int n);
 		void			setYPos(int n);
 		void			setSizeX(int n);
 		void			setSizeY(int n);
 		void			setColor(std::string str);
+		void			setEnemsN(int n);
+		void			setShotNum(int n);
+		void			initObject(WINDOW *win);
 
 	protected:
-		std::string		_type;
+		// std::string		_type;
 		WINDOW			*_win;
 		int				_xPos;
 		int				_yPos;
 		int				_sizeX;
 		int				_sizeY;
 		std::string		_color;
+		// static int		_enemNum;
+		static int	_enemiesNum;
+		static int	_shotsNum;
 };
 
 #endif
