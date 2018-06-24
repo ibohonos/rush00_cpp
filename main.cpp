@@ -89,10 +89,12 @@ int main(void)
 
 	while (42)
 	{
+		if (!p.isAlive())
+            break ;
 		ft_draw_borders(playerwin);
 		mvprintw(2, xMax*0.7 + 2, "Time: %d\n", time);
 		mvprintw(3, xMax*0.7 + 2, "Lives: %d\n", p.getLives());
-		// mvprintw(3, xMax*0.7 + 2, "Lives: %d\n", p.getScore());
+		mvprintw(4, xMax*0.7 + 2, "Score: %d\n", s->getScore());
 		p.display();
 		wrefresh(playerwin);
 
@@ -171,6 +173,21 @@ int main(void)
 		msecs++;
 		while ((esc = getch()) > -1 && esc != 27 && esc != ' ');
 		usleep(50000);
+	}
+	refresh();
+	wrefresh(playerwin);
+	while (1)
+	{
+		ft_draw_borders(playerwin);
+		mvprintw(2, xMax*0.7 + 2, "Game over!", time);
+		mvprintw(3, xMax*0.7 + 2, "Please, try again", time);
+		mvprintw(4, xMax*0.7 + 2, "Or better quit", time);
+		button = p.getmv();
+		if (button == (int)'x')
+			break ;
+		else if (button == 27)
+			exit(1);
+		while ((esc = getch()) > -1 && esc != 27 && esc != ' ');
 	}
 	endwin();
 	return(0);

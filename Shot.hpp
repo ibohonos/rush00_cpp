@@ -30,7 +30,8 @@ class Shot : public Objects
 	void move(void);
 	void display(void);
 	void deletePath(void);
-
+	void setScore(int n);
+	int getScore(void);
 	void initObject(WINDOW *win);
 
 	bool getIsDisp(void);
@@ -41,6 +42,7 @@ class Shot : public Objects
 	int _xMax;
 	int _yMax;
 	bool _isDisp;
+	static int _score;
 };
 
 #endif

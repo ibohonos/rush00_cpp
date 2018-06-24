@@ -33,14 +33,15 @@ class Player : public Objects
 	void display(void);
 	void deletePath(void);
 
-	void setLives(int n);
 
 	void setShots(Shot * shots);
 
-	// void setScore(int);
+	bool isAlive(void);
 
 	int getLives(void);
-	// int getScore(void);
+	int getHP(void);
+	void setHP(int n);
+	void setLives(int n);
 
 	void checkCollision(void);
 	bool checkLife(void);
@@ -54,6 +55,7 @@ class Player : public Objects
 	Stars *_star;
 	Shot * _shots;
 	int _lives;
+	int _hp;
 	// int _score;
 };
 

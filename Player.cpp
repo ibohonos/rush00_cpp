@@ -1,7 +1,10 @@
 
 #include "Player.hpp"
 
-Player::Player(void) {}
+Player::Player(void) {
+	setLives(3);
+    setHP(100);	
+}
 
 Player::Player(WINDOW *win, Enemy *enemies, Asteroids *aster, Stars *star)
 {
@@ -17,6 +20,8 @@ Player::Player(WINDOW *win, Enemy *enemies, Asteroids *aster, Stars *star)
 	setSizeX(3);
 	setSizeY(1);
 	keypad(getWindow(), true);
+	setLives(3);
+    setHP(100);	
 }
 
 Player::Player(Player const &rfs) {
@@ -131,13 +136,12 @@ void Player::checkCollision(void)
 		if ((_aster[i].getXPos() == this->getXPos() + 2) && (_aster[i].getYPos() == this->getYPos()))
 		{
 			_aster[i].initObject(getWindow());
-      setLives(getLives() - 1);
+			setLives(getLives() - 1);
 		}
 	}
 
 	for (int i = 0; i < _shots->shotsNum; i++)
 	{
-		mvwprintw(getWindow(), 2, 2, "Time: %d\n", time);
 		if ((_shots[i].getXPos() == this->getXPos()) && (_shots[i].getYPos() == this->getYPos()))
 		{
 			_shots[i].initObject(getWindow());
@@ -223,3 +227,22 @@ void Player::setShots(Shot *shots)
 {
 	_shots = shots;
 }
+
+bool Player::isAlive(void)
+{
+	if (!this->_lives)
+		return(false);
+	return(true);
+}
+
+int Player::getHP(void)
+{
+	return this->_hp;
+}
+
+void Player::setHP(int n)
+{
+	this->_lives = n;
+}
+
+
