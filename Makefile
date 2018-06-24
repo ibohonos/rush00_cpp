@@ -1,6 +1,6 @@
 NAME		= ft_retro
 
-SRCS		= Objects.cpp Player.cpp main.cpp Enemy.cpp Shot.cpp
+SRCS		= Objects.cpp Player.cpp Shot.cpp Enemy.cpp EnemyShot.cpp main.cpp
 OBJS		= $(SRCS:.cpp=.o)
 
 CXX			= clang++

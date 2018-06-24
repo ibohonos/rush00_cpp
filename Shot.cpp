@@ -43,6 +43,9 @@ void Shot::move(void)
 	y -= 1;
 	if (y < 2)
 	{
+		setYPos(0);
+		setXPos(0);
+		this->display();
 		this->initObject(getWindow());
 		return;
 	}
@@ -55,8 +58,8 @@ void Shot::initObject(WINDOW *win)
 	_win = win;
 	_isDisp = 0;
 	getmaxyx(getWindow(), this->_yMax, this->_xMax);
-	setXPos(rand() % this->_xMax + 3);
-	setYPos(3);
+	// setXPos(rand() % this->_xMax + 3);
+	// setYPos(3);
 	setSizeX(1);
 	setSizeY(1);
 }
@@ -76,7 +79,6 @@ void	Shot::checkCollision(Enemy * enems)
 			enems[i].initObject(getWindow());
 			this->initObject(getWindow());
 			this->deletePath();
-			// setLives(getLives() - 1);
 		}
 
 	}

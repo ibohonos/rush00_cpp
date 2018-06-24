@@ -8,7 +8,6 @@
 #include <ctime>
 #include <unistd.h>
 
-
 class Objects {
 	public:
 		Objects(void);
@@ -36,14 +35,13 @@ class Objects {
 		void			initObject(WINDOW *win);
 
 	protected:
-		// std::string		_type;
 		WINDOW			*_win;
+
 		int				_xPos;
 		int				_yPos;
 		int				_sizeX;
 		int				_sizeY;
 		std::string		_color;
-		// static int		_enemNum;
 		static int	_enemiesNum;
 		static int	_shotsNum;
 };

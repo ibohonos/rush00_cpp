@@ -16,6 +16,7 @@
 #include <iostream>
 #include "Objects.hpp"
 
+
 class Enemy : public Objects
 {
   public:
@@ -28,13 +29,15 @@ class Enemy : public Objects
 	void deletePath(void);
 	// void remove(void);
 
+	// void shot(Shot * shots);
+
 	void initObject(WINDOW *win);
 
   private:
-	int			_xMax;
-	int			_yMax;
-	static int	_enemiesNum;
-	bool		_isDisp;
+	int _xMax;
+	int _yMax;
+	static int _enemiesNum;
+	bool _isDisp;
 };
 
 #endif

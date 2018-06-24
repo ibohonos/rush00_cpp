@@ -31,19 +31,15 @@ class Shot : public Objects
 	void deletePath(void);
 
 	void initObject(WINDOW *win);
-	void checkCollision(void);
 
 	bool getIsDisp(void);
-
 	static int shotsNum;
 	void checkCollision(Enemy *enems);
 
   private:
 	int _xMax;
 	int _yMax;
-	// static int	_shotsNum;
 	bool _isDisp;
-	bool _authorPlayer;
 };
 
 #endif
