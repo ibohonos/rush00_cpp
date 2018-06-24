@@ -17,14 +17,15 @@
 
 #include "Objects.hpp"
 #include "Enemy.hpp"
+#include "Asteroids.hpp"
 
 class Shot : public Objects
 {
   public:
 	Shot(void);
-	// Enemy(WINDOW *win, int yPos, int xPos, int sizeY, int sizeX, std::string type);
-	// Player(Player const &other);
-	// ~Player(void);
+	Shot(Shot const &other);
+	~Shot(void);
+	Shot		&operator=( Shot const &rfs );
 
 	void move(void);
 	void display(void);
@@ -36,12 +37,11 @@ class Shot : public Objects
 	bool getIsDisp(void);
 
 	static int shotsNum;
-	void checkCollision(Enemy *enems);
+	void checkCollision(Enemy *enems, Asteroids *aster);
 
   private:
 	int _xMax;
 	int _yMax;
-	// static int	_shotsNum;
 	bool _isDisp;
 	bool _authorPlayer;
 };

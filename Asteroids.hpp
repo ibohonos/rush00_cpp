@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Enemy.hpp                                          :+:      :+:    :+:   */
+/*   Asteroids.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pzubar <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,31 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENEMY_HPP
-#define ENEMY_HPP
+#ifndef ASTEROIDS_HPP
+#define ASTEROIDS_HPP
 
 #include <iostream>
 #include "Objects.hpp"
 
-class Enemy : public Objects
+class Asteroids : public Objects
 {
   public:
-	Enemy(void);
-	// Enemy(WINDOW *win, int yPos, int xPos, int sizeY, int sizeX, std::string type);
-	Enemy(Enemy const &other);
-	~Enemy(void);
+	Asteroids(void);
+	Asteroids(Asteroids const &other);
+	~Asteroids(void);
 	void mvdown(void);
 	void display(void);
 	void deletePath(void);
 	// void remove(void);
 
 	void initObject(WINDOW *win);
-	Enemy		&operator=( Enemy const &rfs );
+	Asteroids	&operator=( Asteroids const &rfs );
 
   private:
 	int			_xMax;
 	int			_yMax;
-	static int	_enemiesNum;
+	static int	_asteroidsNum;
 	bool		_isDisp;
 };
 

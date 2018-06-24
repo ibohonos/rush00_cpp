@@ -11,14 +11,18 @@
 #include "Objects.hpp"
 #include "Enemy.hpp"
 #include "Shot.hpp"
+#include "Asteroids.hpp"
+#include "Stars.hpp"
 
 class Player : public Objects
 {
   public:
 	Player(void);
-	Player(WINDOW *win, Enemy *enemies);
-	// Player(Player const &rfs);
-	// ~Player(void);
+	Player(WINDOW *win, Enemy *enemies, Asteroids *aster, Stars *star);
+	Player(Player const &rfs);
+	~Player(void);
+
+	Player		&operator=( Player const &rfs );
 
 	void mvup(void);
 	void mvdown(void);
@@ -42,6 +46,8 @@ class Player : public Objects
 	int _xMax;
 	int _yMax;
 	Enemy *_enems;
+	Asteroids *_aster;
+	Stars *_star;
 	Shot * _shots;
 	int _lives;
 };

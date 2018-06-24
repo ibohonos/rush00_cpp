@@ -19,6 +19,22 @@ Shot::Shot(void)
 	shotsNum++;
 }
 
+Shot::Shot(Shot const &other) {
+	*this = other;
+}
+
+Shot::~Shot(void) {}
+
+Shot		&Shot::operator=( Shot const &rfs )
+{
+	this->_xMax = rfs._xMax;
+	this->_yMax = rfs._yMax;
+	this->_isDisp = rfs._isDisp;
+	this->_authorPlayer = rfs._authorPlayer;
+	return *this;
+}
+
+
 void Shot::deletePath(void)
 {
 	mvwaddstr(getWindow(), getYPos(), getXPos(), " ");
@@ -66,7 +82,7 @@ bool Shot::getIsDisp(void)
 	return _isDisp;
 }
 
-void	Shot::checkCollision(Enemy * enems)
+void	Shot::checkCollision(Enemy *enems, Asteroids *aster)
 {
 	for (int i = 0; i < _enemiesNum; i++)
 	{
@@ -78,6 +94,15 @@ void	Shot::checkCollision(Enemy * enems)
 			this->deletePath();
 			// setLives(getLives() - 1);
 		}
-
+	}
+	for (int i = 0; i < _asteroidsNum; i++)
+	{
+		if ((aster[i].getXPos() == this->getXPos()) && (aster[i].getYPos() == this->getYPos()))
+		{
+			aster[i].deletePath();
+			aster[i].initObject(getWindow());
+			this->initObject(getWindow());
+			this->deletePath();
+		}
 	}
 }
