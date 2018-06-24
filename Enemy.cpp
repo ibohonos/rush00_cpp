@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "Objects.hpp"
 #include "Enemy.hpp"
 
 int Enemy::_enemiesNum = 0;

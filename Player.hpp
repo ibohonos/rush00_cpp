@@ -14,6 +14,7 @@
 #include "Asteroids.hpp"
 #include "Stars.hpp"
 
+
 class Player : public Objects
 {
   public:
@@ -36,10 +37,13 @@ class Player : public Objects
 
 	void setShots(Shot * shots);
 
+	// void setScore(int);
+
 	int getLives(void);
+	// int getScore(void);
 
 	void checkCollision(void);
-	
+	bool checkLife(void);
 	void shot(void);
 
   private:
@@ -50,6 +54,7 @@ class Player : public Objects
 	Stars *_star;
 	Shot * _shots;
 	int _lives;
+	// int _score;
 };
 
 #endif

@@ -11,15 +11,17 @@
 #include "Shot.hpp"
 #include "Asteroids.hpp"
 #include "Stars.hpp"
+#include "EnemyShot.hpp"
 
 static int ENEM_NUM = 150;
 static int ASTEROIDS_NUM = 50;
 static int SHOTS_NUM = 100;
 static int STARS_NUM = 500;
 
-void draw_borders(WINDOW *win)
+void ft_draw_borders(WINDOW *win)
 {
-	int x, y, i;
+	int x;
+	int y;
 
 	getmaxyx(win, y, x);
 
@@ -27,12 +29,12 @@ void draw_borders(WINDOW *win)
 	init_pair(3, COLOR_WHITE, COLOR_WHITE);
 	wattron(win, A_REVERSE);
 	wattron(win, COLOR_PAIR(3));
-	for (i = 0; i < (y); i++)
+	for (int i = 0; i < (y); i++)
 	{
 		mvwprintw(win, i, 0, " ");
 		mvwprintw(win, i, x - 1, " ");
 	}
-	for (i = 0; i < (x); i++)
+	for (int i = 0; i < (x); i++)
 	{
 		mvwprintw(win, 0, i, " ");
 		mvwprintw(win, y - 1, i, " ");
@@ -62,6 +64,7 @@ int main(void)
 	Asteroids a[ASTEROIDS_NUM];
 	Stars star[STARS_NUM];
 	Shot s[SHOTS_NUM];
+	EnemyShot enemshot[SHOTS_NUM];
 	Player p(playerwin, w, a, star);
 	for(int i = 0; i < ENEM_NUM; i++)
 		w[i].initObject(playerwin);
@@ -72,6 +75,13 @@ int main(void)
 	for(int i = 0; i < STARS_NUM; i++)
 		star[i].initObject(playerwin);
 	
+	for (int i = 0; i < SHOTS_NUM; i++)
+	{
+		enemshot[i].setEnemiesPlayer(w, &p);
+		enemshot[i].initObject(playerwin);
+	}
+		
+	
 	p.setShots(s);
 	int esc;
 
@@ -79,34 +89,30 @@ int main(void)
 
 	while (42)
 	{
-		draw_borders(playerwin);
-		// mvwprintw(playerwin, 2, 2,"Time: %d\n", time);
+		ft_draw_borders(playerwin);
 		mvprintw(2, xMax*0.7 + 2, "Time: %d\n", time);
 		mvprintw(3, xMax*0.7 + 2, "Lives: %d\n", p.getLives());
-		
+		// mvprintw(3, xMax*0.7 + 2, "Lives: %d\n", p.getScore());
 		p.display();
-		
 		wrefresh(playerwin);
-		//usleep(1000000); - секунда
-		
-		if (!(msecs % 2)) {
+
+		if (!(msecs % 2))
 			for (int i = 0; i < SHOTS_NUM; i++)
 					s[i].move();
-			// for (int i = 0; i < (STARS_NUM / (yMax / 2)); i++)
-			// {
-			// 	// mvwprintw(playerwin, 2, 2,"Time: %d\n", i);
-			// 	int l = sthase + i;
-			// 	star[l].display();
-			// }
-			// sthase += STARS_NUM / (yMax / 2);
-			// if (sthase >= STARS_NUM)
-			// 	sthase = 0;
-		}
+		for (int i = 0; i < SHOTS_NUM; i++)
+			enemshot[i].checkLine();
+				// enemshot[i].display();
+		for (int i = 0; i < SHOTS_NUM; i++)
+			enemshot[i].move();	
+		
+		for (int i = 0; i < SHOTS_NUM; i++)
+			if (enemshot[i].checkCollision())
+				p.setLives(p.getLives() - 1);
+		
 		if (!(msecs % 25))
 		{
 			for (int i = 0; i < (ENEM_NUM / (yMax / 2)); i++)
 			{
-				// mvwprintw(playerwin, 2, 2,"Time: %d\n", i);
 				int n = phase + i;
 				w[n].display();
 			}
@@ -158,6 +164,8 @@ int main(void)
 			break ;
 		else if (button == 32)
 			p.shot();
+		else if (button == 27)
+			exit(1);
 		for(int i = 0; i < SHOTS_NUM; i++)
 			s[i].checkCollision(w, a);
 		msecs++;

@@ -13,10 +13,10 @@ Player::Player(WINDOW *win, Enemy *enemies, Asteroids *aster, Stars *star)
 	getmaxyx(getWindow(), this->_yMax, this->_xMax);
 	setXPos(_xMax / 2 - 2);
 	setYPos(_yMax / 1.5);
-	
+
 	setSizeX(3);
 	setSizeY(1);
-	keypad(getWindow(), true); 
+	keypad(getWindow(), true);
 }
 
 Player::Player(Player const &rfs) {
@@ -42,7 +42,7 @@ void		Player::deletePath(void)
 	mvwaddstr(getWindow(), getYPos(), getXPos(), "     ");
 }
 
-void		Player::display(void)
+void Player::display(void)
 {
 	start_color();
 	init_pair(1, COLOR_CYAN, COLOR_BLACK);
@@ -56,7 +56,7 @@ void		Player::display(void)
 	checkCollision();
 }
 
-void		Player::mvup()
+void Player::mvup()
 {
 	this->deletePath();
 	int y = getYPos();
@@ -66,7 +66,7 @@ void		Player::mvup()
 	setYPos(y);
 }
 
-void		Player::mvdown()
+void Player::mvdown()
 {
 	this->deletePath();
 	int y = getYPos();
@@ -76,7 +76,7 @@ void		Player::mvdown()
 	setYPos(y);
 }
 
-void		Player::mvleft()
+void Player::mvleft()
 {
 	this->deletePath();
 	int x = getXPos();
@@ -86,7 +86,7 @@ void		Player::mvleft()
 	setXPos(x);
 }
 
-void		Player::mvright()
+void Player::mvright()
 {
 	this->deletePath();
 	int x = getXPos();
@@ -96,8 +96,8 @@ void		Player::mvright()
 	setXPos(x);
 }
 
-void	Player::checkCollision(void)
-{ 
+void Player::checkCollision(void)
+{
 	for (int i = 0; i < _enemiesNum; i++)
 	{
 		if ((_enems[i].getXPos() == this->getXPos()) && (_enems[i].getYPos() == this->getYPos()))
@@ -131,43 +131,63 @@ void	Player::checkCollision(void)
 		if ((_aster[i].getXPos() == this->getXPos() + 2) && (_aster[i].getYPos() == this->getYPos()))
 		{
 			_aster[i].initObject(getWindow());
+      setLives(getLives() - 1);
+		}
+	}
+
+	for (int i = 0; i < _shots->shotsNum; i++)
+	{
+		mvwprintw(getWindow(), 2, 2, "Time: %d\n", time);
+		if ((_shots[i].getXPos() == this->getXPos()) && (_shots[i].getYPos() == this->getYPos()))
+		{
+			_shots[i].initObject(getWindow());
+			setLives(getLives() - 1);
+		}
+		if ((_shots[i].getXPos() == this->getXPos() + 1) && (_shots[i].getYPos() == this->getYPos()))
+		{
+			_shots[i].initObject(getWindow());
+			setLives(getLives() - 1);
+		}
+		if ((_shots[i].getXPos() == this->getXPos() + 2) && (_shots[i].getYPos() == this->getYPos()))
+		{
+			_shots[i].initObject(getWindow());
 			setLives(getLives() - 1);
 		}
 	}
 }
 
-int			Player::getmv()
+int Player::getmv()
 {
 	int choice = wgetch(stdscr);
 	switch (choice)
 	{
-		case KEY_UP:
-			this->mvup();
-			break;
-		case KEY_DOWN:
-			this->mvdown();
-			break;
-		case KEY_LEFT:
-			this->mvleft();
-			break;
-		case KEY_RIGHT:
-			this->mvright();
-			break;
-		case 27:
-			exit(1);
-			break;
-		default:
-			break;
+	case KEY_UP:
+		this->mvup();
+		break;
+	case KEY_DOWN:
+		this->mvdown();
+		break;
+	case KEY_LEFT:
+		this->mvleft();
+		break;
+	case KEY_RIGHT:
+		this->mvright();
+		break;
+	case 27:
+		exit(1);
+		break;
+	default:
+		break;
 	}
 	return (choice);
 }
 
-int			Player::getLives(void)
+int Player::getLives(void)
 {
 	return this->_lives;
 }
 
-void			Player::setLives(int n)
+void Player::setLives(int n)
 {
 	this->_lives = n;
 }
@@ -194,12 +214,12 @@ void Player::shot(void)
 			_shots[i].setXPos(getXPos() + 2);
 			_shots[i].setYPos(getYPos() - 1);
 			_shots[i].display();
-			break; 
+			break;
 		}
 	}
 }
 
-void Player::setShots(Shot * shots)
+void Player::setShots(Shot *shots)
 {
 	_shots = shots;
 }
