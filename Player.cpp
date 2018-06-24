@@ -3,10 +3,12 @@
 
 Player::Player(void) {}
 
-Player::Player(WINDOW *win, Enemy *enemies)
+Player::Player(WINDOW *win, Enemy *enemies, Asteroids *aster, Stars *star)
 {
 	_win = win;
 	_enems = enemies;
+	_aster = aster;
+	_star = star;
 	_lives = 3;
 	getmaxyx(getWindow(), this->_yMax, this->_xMax);
 	setXPos(_xMax / 2 - 2);
@@ -17,7 +19,25 @@ Player::Player(WINDOW *win, Enemy *enemies)
 	keypad(getWindow(), true);
 }
 
-void Player::deletePath(void)
+Player::Player(Player const &rfs) {
+	*this = rfs;
+}
+
+Player::~Player(void) {}
+
+Player		&Player::operator=( Player const &rfs )
+{
+	this->_xMax = rfs._xMax;
+	this->_yMax = rfs._yMax;
+	this->_enems = rfs._enems;
+	this->_star = rfs._star;
+	this->_shots = rfs._shots;
+	this->_lives = rfs._lives;
+	return *this;
+}
+
+
+void		Player::deletePath(void)
 {
 	mvwaddstr(getWindow(), getYPos(), getXPos(), "     ");
 }
@@ -96,6 +116,25 @@ void Player::checkCollision(void)
 			setLives(getLives() - 1);
 		}
 	}
+	for (int i = 0; i < _asteroidsNum; i++)
+	{
+		if ((_aster[i].getXPos() == this->getXPos()) && (_aster[i].getYPos() == this->getYPos()))
+		{
+			_aster[i].initObject(getWindow());
+			setLives(getLives() - 1);
+		}
+		if ((_aster[i].getXPos() == this->getXPos() + 1) && (_aster[i].getYPos() == this->getYPos()))
+		{
+			_aster[i].initObject(getWindow());
+			setLives(getLives() - 1);
+		}
+		if ((_aster[i].getXPos() == this->getXPos() + 2) && (_aster[i].getYPos() == this->getYPos()))
+		{
+			_aster[i].initObject(getWindow());
+      setLives(getLives() - 1);
+		}
+	}
+
 	for (int i = 0; i < _shots->shotsNum; i++)
 	{
 		mvwprintw(getWindow(), 2, 2, "Time: %d\n", time);

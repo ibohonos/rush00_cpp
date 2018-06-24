@@ -15,7 +15,7 @@ class Objects {
 		Objects(Objects const &rfs);
 		~Objects(void);
 
-		Objects			&operator=(Objects const &rfs );
+		Objects			&operator=( Objects const &rfs );
 		int				getXPos(void);
 		int				getYPos(void);
 		int				getSizeX(void);
@@ -23,6 +23,8 @@ class Objects {
 		std::string		getColor(void);
 		WINDOW			*getWindow(void);
 		int				getEnemsN(void);
+		int				getAsterN(void);
+		int				getStarN(void);
 		int				getShotNum(void);
 
 		void			setXPos(int n);
@@ -31,6 +33,8 @@ class Objects {
 		void			setSizeY(int n);
 		void			setColor(std::string str);
 		void			setEnemsN(int n);
+		void			setAsterN(int n);
+		void			setStarN(int n);
 		void			setShotNum(int n);
 		void			initObject(WINDOW *win);
 
@@ -43,6 +47,8 @@ class Objects {
 		int				_sizeY;
 		std::string		_color;
 		static int	_enemiesNum;
+		static int	_asteroidsNum;
+		static int	_starsNum;
 		static int	_shotsNum;
 };
 

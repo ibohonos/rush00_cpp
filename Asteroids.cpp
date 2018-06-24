@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Enemy.cpp                                          :+:      :+:    :+:   */
+/*   Asteroids.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pzubar <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,49 +10,49 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Enemy.hpp"
+#include "Asteroids.hpp"
 
-int Enemy::_enemiesNum = 0;
+int Asteroids::_asteroidsNum = 0;
 
-Enemy::Enemy(void)
+Asteroids::Asteroids(void)
 {
 	std::srand(std::time(0));
-	setEnemsN(getEnemsN() + 1);
+	setAsterN(getAsterN() + 1);
 }
 
-Enemy::Enemy(Enemy const &other)
+Asteroids::Asteroids(Asteroids const &other)
 {
 	*this = other;
 }
 
-Enemy::~Enemy(void) {}
+Asteroids::~Asteroids(void) {}
 
-Enemy	&Enemy::operator=( Enemy const &rfs ) {
+Asteroids	&Asteroids::operator=( Asteroids const &rfs ) {
 	this->_xMax = rfs._xMax;
 	this->_yMax = rfs._yMax;
-	this->_enemiesNum = rfs._enemiesNum;
+	this->_asteroidsNum = rfs._asteroidsNum;
 	this->_isDisp = rfs._isDisp;
 	return *this;
 }
 
-void Enemy::deletePath(void)
+void Asteroids::deletePath(void)
 {
-	mvwaddstr(getWindow(), getYPos(), getXPos(), " ");
+	mvwaddstr(getWindow(), getYPos(), getXPos(), "   ");
 }
 
-void Enemy::display(void)
+void Asteroids::display(void)
 {
 	start_color();
-	init_pair(2, COLOR_RED, COLOR_WHITE);
+	init_pair(10, COLOR_BLUE, COLOR_WHITE);
 	wattron(getWindow(), A_REVERSE);
-	wattron(getWindow(), COLOR_PAIR(2));
-	mvwaddstr(getWindow(), getYPos(), getXPos(), "|");
-	wattroff(getWindow(), COLOR_PAIR(2));
+	wattron(getWindow(), COLOR_PAIR(10));
+	mvwaddstr(getWindow(), getYPos(), getXPos(), " @ ");
+	wattroff(getWindow(), COLOR_PAIR(10));
 	wattroff(getWindow(), A_REVERSE);
 	_isDisp = 1;
 }
 
-void Enemy::mvdown(void)
+void Asteroids::mvdown(void)
 {
 	if (!_isDisp)
 		return;
@@ -69,13 +69,13 @@ void Enemy::mvdown(void)
 	this->display();
 }
 
-void Enemy::initObject(WINDOW *win)
+void Asteroids::initObject(WINDOW *win)
 {
 	_win = win;
 	_isDisp = 0;
 	getmaxyx(getWindow(), this->_yMax, this->_xMax);
 	setXPos(rand() % this->_xMax + 2);
 	setYPos(3);
-	setSizeX(1);
+	setSizeX(3);
 	setSizeY(1);
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Enemy.cpp                                          :+:      :+:    :+:   */
+/*   Stars.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pzubar <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,49 +10,49 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Enemy.hpp"
+#include "Stars.hpp"
 
-int Enemy::_enemiesNum = 0;
+int Stars::_starsNum = 0;
 
-Enemy::Enemy(void)
+Stars::Stars(void)
 {
 	std::srand(std::time(0));
-	setEnemsN(getEnemsN() + 1);
+	setStarN(getStarN() + 1);
 }
 
-Enemy::Enemy(Enemy const &other)
-{
+
+Stars::Stars(Stars const &other) {
 	*this = other;
 }
 
-Enemy::~Enemy(void) {}
+Stars::~Stars(void) {}
 
-Enemy	&Enemy::operator=( Enemy const &rfs ) {
+Stars		&Stars::operator=( Stars const &rfs ) {
 	this->_xMax = rfs._xMax;
 	this->_yMax = rfs._yMax;
-	this->_enemiesNum = rfs._enemiesNum;
 	this->_isDisp = rfs._isDisp;
+	this->_starsNum = rfs._starsNum;
 	return *this;
 }
 
-void Enemy::deletePath(void)
+void Stars::deletePath(void)
 {
 	mvwaddstr(getWindow(), getYPos(), getXPos(), " ");
 }
 
-void Enemy::display(void)
+void Stars::display(void)
 {
 	start_color();
-	init_pair(2, COLOR_RED, COLOR_WHITE);
+	init_pair(7, COLOR_BLACK, COLOR_YELLOW);
 	wattron(getWindow(), A_REVERSE);
-	wattron(getWindow(), COLOR_PAIR(2));
-	mvwaddstr(getWindow(), getYPos(), getXPos(), "|");
-	wattroff(getWindow(), COLOR_PAIR(2));
+	wattron(getWindow(), COLOR_PAIR(7));
+	mvwaddstr(getWindow(), getYPos(), getXPos(), ".");
+	wattroff(getWindow(), COLOR_PAIR(7));
 	wattroff(getWindow(), A_REVERSE);
 	_isDisp = 1;
 }
 
-void Enemy::mvdown(void)
+void Stars::mvdown(void)
 {
 	if (!_isDisp)
 		return;
@@ -69,13 +69,13 @@ void Enemy::mvdown(void)
 	this->display();
 }
 
-void Enemy::initObject(WINDOW *win)
+void Stars::initObject(WINDOW *win)
 {
 	_win = win;
 	_isDisp = 0;
 	getmaxyx(getWindow(), this->_yMax, this->_xMax);
 	setXPos(rand() % this->_xMax + 2);
-	setYPos(3);
+	setYPos(rand() % this->_yMax + 2);
 	setSizeX(1);
 	setSizeY(1);
 }
