@@ -82,8 +82,6 @@ int main(void)
 		enemshot[i].setEnemiesPlayer(w, &p);
 		enemshot[i].initObject(playerwin);
 	}
-		
-	
 	p.setShots(s);
 	int esc;
 
@@ -103,8 +101,8 @@ int main(void)
 		if (!(msecs % 2))
 			for (int i = 0; i < SHOTS_NUM; i++)
 					s[i].move();
-		for (int i = 0; i < SHOTS_NUM; i++)
-			enemshot[i].checkLine();
+		
+		
 		for (int i = 0; i < SHOTS_NUM; i++)
 			enemshot[i].move();	
 		
@@ -112,8 +110,27 @@ int main(void)
 			if (enemshot[i].checkCollision())
 			{
 				p.setLives(p.getLives() - 1);
+				enemshot[i].setYPos(-999);
 				break ;
 			}
+
+		for (int i = 0; i < (ENEM_NUM); i++)
+		{
+			if (w[i].getIsDisp())
+				if (w[i].getXPos() == p.getXPos() || w[i].getXPos() == p.getXPos() + 1 || w[i].getXPos() == p.getXPos() + 2)
+				{
+					for (int a = 0; a < SHOTS_NUM; a++)
+					{
+						if (!enemshot[a].getIsDisp())
+						{
+							enemshot[a].setXPos(w[i].getXPos());
+							enemshot[a].setYPos(w[i].getYPos() + 1);
+							enemshot[a].display();	
+						}
+					}
+				}
+		}
+
 		if (!(msecs % 25))
 		{
 			for (int i = 0; i < (ENEM_NUM / (yMax / 2)); i++)

@@ -27,6 +27,11 @@ Enemy::Enemy(Enemy const &other)
 
 Enemy::~Enemy(void) {}
 
+bool Enemy::getIsDisp(void)
+{
+	return _isDisp;
+}
+
 Enemy	&Enemy::operator=( Enemy const &rfs ) {
 	this->_xMax = rfs._xMax;
 	this->_yMax = rfs._yMax;
@@ -75,7 +80,7 @@ void Enemy::initObject(WINDOW *win)
 	_isDisp = 0;
 	getmaxyx(getWindow(), this->_yMax, this->_xMax);
 	setXPos(rand() % this->_xMax + 2);
-	setYPos(3);
+	setYPos(1);
 	setSizeX(1);
 	setSizeY(1);
 }

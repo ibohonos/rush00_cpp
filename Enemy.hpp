@@ -27,7 +27,7 @@ class Enemy : public Objects
 	void mvdown(void);
 	void display(void);
 	void deletePath(void);
-	// void remove(void);
+	bool getIsDisp(void);
 
 	// void shot(Shot * shots);
 

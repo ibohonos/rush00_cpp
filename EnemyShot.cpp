@@ -73,7 +73,7 @@ void EnemyShot::move(void)
 void EnemyShot::initObject(WINDOW *win)
 {
     _win = win;
-    _isDisp = 0;
+    _isDisp = false;
     getmaxyx(getWindow(), this->_yMax, this->_xMax);
     // setXPos(rand() % this->_xMax + 3);
     // setYPos(3);
