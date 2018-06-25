@@ -118,5 +118,19 @@ void	Shot::checkCollision(Enemy *enems, Asteroids *aster)
 			this->initObject(getWindow());
 			this->deletePath();
 		}
+		if ((aster[i].getXPos() + 1 == this->getXPos()) && (aster[i].getYPos() == this->getYPos()))
+		{
+			aster[i].deletePath();
+			aster[i].initObject(getWindow());
+			this->initObject(getWindow());
+			this->deletePath();
+		}
+		if ((aster[i].getXPos() + 2 == this->getXPos()) && (aster[i].getYPos() == this->getYPos()))
+		{
+			aster[i].deletePath();
+			aster[i].initObject(getWindow());
+			this->initObject(getWindow());
+			this->deletePath();
+		}
 	}
 }

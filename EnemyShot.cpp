@@ -94,6 +94,18 @@ bool EnemyShot::checkCollision(void)
         this->deletePath();
         return(true);
     }
+    if ((_player->getXPos() + 1 == this->getXPos()) && (_player->getYPos() == this->getYPos()))
+    {
+        this->initObject(getWindow());
+        this->deletePath();
+        return(true);
+    }
+    if ((_player->getXPos() + 2 == this->getXPos()) && (_player->getYPos() == this->getYPos()))
+    {
+        this->initObject(getWindow());
+        this->deletePath();
+        return(true);
+    }
     return(false);
 }
 
@@ -101,7 +113,6 @@ bool EnemyShot::checkLine(void)
 {
     for (int i = 0; i < _enemiesNum; i++)
     {
-        mvprintw(4, 10 + 2, "Lives: %d\n", _enemies[i].getXPos());
         if ((_enemies[i].getXPos()) == (_player->getXPos()))
         {
             if (!this->getIsDisp())

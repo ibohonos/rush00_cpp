@@ -3,7 +3,6 @@
 
 Player::Player(void) {
 	setLives(3);
-    setHP(100);	
 }
 
 Player::Player(WINDOW *win, Enemy *enemies, Asteroids *aster, Stars *star)
@@ -12,7 +11,6 @@ Player::Player(WINDOW *win, Enemy *enemies, Asteroids *aster, Stars *star)
 	_enems = enemies;
 	_aster = aster;
 	_star = star;
-	_lives = 3;
 	getmaxyx(getWindow(), this->_yMax, this->_xMax);
 	setXPos(_xMax / 2 - 2);
 	setYPos(_yMax / 1.5);
@@ -21,7 +19,6 @@ Player::Player(WINDOW *win, Enemy *enemies, Asteroids *aster, Stars *star)
 	setSizeY(1);
 	keypad(getWindow(), true);
 	setLives(3);
-    setHP(100);	
 }
 
 Player::Player(Player const &rfs) {
@@ -109,16 +106,19 @@ void Player::checkCollision(void)
 		{
 			_enems[i].initObject(getWindow());
 			setLives(getLives() - 1);
+			break;
 		}
 		if ((_enems[i].getXPos() == this->getXPos() + 1) && (_enems[i].getYPos() == this->getYPos()))
 		{
 			_enems[i].initObject(getWindow());
 			setLives(getLives() - 1);
+			break;
 		}
 		if ((_enems[i].getXPos() == this->getXPos() + 2) && (_enems[i].getYPos() == this->getYPos()))
 		{
 			_enems[i].initObject(getWindow());
 			setLives(getLives() - 1);
+			break;
 		}
 	}
 	for (int i = 0; i < _asteroidsNum; i++)
@@ -127,35 +127,76 @@ void Player::checkCollision(void)
 		{
 			_aster[i].initObject(getWindow());
 			setLives(getLives() - 1);
+			break;
 		}
 		if ((_aster[i].getXPos() == this->getXPos() + 1) && (_aster[i].getYPos() == this->getYPos()))
 		{
 			_aster[i].initObject(getWindow());
 			setLives(getLives() - 1);
+			break;
 		}
 		if ((_aster[i].getXPos() == this->getXPos() + 2) && (_aster[i].getYPos() == this->getYPos()))
 		{
 			_aster[i].initObject(getWindow());
 			setLives(getLives() - 1);
+			break;
+		}
+		if ((_aster[i].getXPos() + 1 == this->getXPos()) && (_aster[i].getYPos() == this->getYPos()))
+		{
+			_aster[i].initObject(getWindow());
+			setLives(getLives() - 1);
+			break;
+		}
+		if ((_aster[i].getXPos() + 1 == this->getXPos() + 1) && (_aster[i].getYPos() == this->getYPos()))
+		{
+			_aster[i].initObject(getWindow());
+			setLives(getLives() - 1);
+			break;
+		}
+		if ((_aster[i].getXPos() + 1 == this->getXPos() + 2) && (_aster[i].getYPos() == this->getYPos()))
+		{
+			_aster[i].initObject(getWindow());
+			setLives(getLives() - 1);
+			break;
+		}
+		if ((_aster[i].getXPos() + 2 == this->getXPos()) && (_aster[i].getYPos() == this->getYPos()))
+		{
+			_aster[i].initObject(getWindow());
+			setLives(getLives() - 1);
+			break;
+		}
+		if ((_aster[i].getXPos() + 2 == this->getXPos() + 1) && (_aster[i].getYPos() == this->getYPos()))
+		{
+			_aster[i].initObject(getWindow());
+			setLives(getLives() - 1);
+			break;
+		}
+		if ((_aster[i].getXPos() + 2 == this->getXPos() + 2) && (_aster[i].getYPos() == this->getYPos()))
+		{
+			_aster[i].initObject(getWindow());
+			setLives(getLives() - 1);
+			break;
 		}
 	}
-
 	for (int i = 0; i < _shots->shotsNum; i++)
 	{
 		if ((_shots[i].getXPos() == this->getXPos()) && (_shots[i].getYPos() == this->getYPos()))
 		{
 			_shots[i].initObject(getWindow());
 			setLives(getLives() - 1);
+			break;
 		}
 		if ((_shots[i].getXPos() == this->getXPos() + 1) && (_shots[i].getYPos() == this->getYPos()))
 		{
 			_shots[i].initObject(getWindow());
 			setLives(getLives() - 1);
+			break;
 		}
 		if ((_shots[i].getXPos() == this->getXPos() + 2) && (_shots[i].getYPos() == this->getYPos()))
 		{
 			_shots[i].initObject(getWindow());
 			setLives(getLives() - 1);
+			break;
 		}
 	}
 }
@@ -201,6 +242,8 @@ void Player::shot(void)
 	int guns;
 
 	guns = 1;
+	// system("pkill afplay");
+	// system("afplay ~/Desktop/laser.aiff");
 	for (int i = 0; i < _shots->shotsNum; i++)
 	{
 		if (guns)
@@ -230,7 +273,7 @@ void Player::setShots(Shot *shots)
 
 bool Player::isAlive(void)
 {
-	if (!this->_lives)
+	if (this->_lives <= 0)
 		return(false);
 	return(true);
 }
@@ -238,11 +281,6 @@ bool Player::isAlive(void)
 int Player::getHP(void)
 {
 	return this->_hp;
-}
-
-void Player::setHP(int n)
-{
-	this->_lives = n;
 }
 
 
